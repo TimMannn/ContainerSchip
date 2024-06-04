@@ -20,6 +20,7 @@ namespace ContainerSchip
             y = Y;
             aantalContainers = AantalContainers;
             containers = new List<Container>();
+            bool Waardevol = false;
         }
 
         public ContainerStapel[,] grid;

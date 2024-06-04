@@ -5,6 +5,7 @@ using ContainerSchip;
 int ContainerAmount = 0;
 bool ContainerInputLoop = true;
 ContainerStapel containerStapel = new ContainerStapel();
+Schip Containerschip = new Schip();
 
 while (ContainerInputLoop)
 {
@@ -81,7 +82,7 @@ while (y == 0)
         Console.WriteLine("Ongeldige invoer, de lengte mag niet 0 zijn!");
     }
 
-    if (y > 5)
+    if (y > 15)
     {
         Console.WriteLine("Ongeldige invoer, de maximale lengte is 5 containers!");
         y = 0;
@@ -185,7 +186,10 @@ for (int i = 0; i < ContainerAmount; i++)
     // Voeg containers toe aan stapels
     foreach (var container in containers)
     {
-        ContainerStapel Stapel = containerStapel.grid[0, 1]; //Is nog vaste plek
+        int yGrid = Containerschip.yPossitie(container, y);
+        int xGrid = Containerschip.xPossitie();
+       
+        ContainerStapel Stapel = containerStapel.grid[yGrid, xGrid]; //Is nog vaste plek
         Stapel.VoegContainerToe(container);
     }
 
