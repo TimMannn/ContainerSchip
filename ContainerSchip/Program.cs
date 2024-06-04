@@ -1,8 +1,10 @@
-﻿using ContainerSchip;
+﻿using System.Security.Cryptography.X509Certificates;
+using ContainerSchip;
 
 // Hoeveel containers komen er op het schip
 int ContainerAmount = 0;
 bool ContainerInputLoop = true;
+ContainerStapel containerStapel = new ContainerStapel();
 
 while (ContainerInputLoop)
 {
@@ -24,11 +26,71 @@ while (ContainerInputLoop)
 
 
 // Grote van schip bepalen
-Console.WriteLine("\nWat is de grote van het schip?");
-Console.Write("x: ");
-var x = Console.ReadLine();
-Console.Write("y: ");
-var y = Console.ReadLine();
+int x = 0;
+int y = 0;
+while (x == 0)
+{
+    Console.WriteLine("\nWat is de grote van het schip?");
+    Console.Write("x: ");
+    var xInput = Console.ReadLine();
+    bool CorrectParseX = int.TryParse(xInput, out x);
+    containerStapel.x = x;
+    Console.Clear();
+
+    if (CorrectParseX == false)
+    {
+        Console.WriteLine("Ongeldige invoer, probeer opnieuw!");
+        x = 0;
+        continue;
+    }
+
+    if (x <= 0)
+    {
+        Console.WriteLine("Ongeldige invoer, de breedte mag niet 0 zijn!");
+        continue;
+    }
+
+    if (x > 5)
+    {
+        Console.WriteLine("Ongeldige invoer, de maximale breedte is 5 containers!");
+        x = 0;
+        continue;
+    }
+
+    Console.WriteLine("\nWat is de grote van het schip?");
+    Console.Write("x: ");
+    Console.WriteLine($"{x}");
+}
+
+while (y == 0)
+{
+    Console.Write("y: ");
+    var yInput = Console.ReadLine();
+    bool CorrectParseY = int.TryParse(yInput, out y);
+    containerStapel.y = y;
+    Console.Clear();
+
+    if (CorrectParseY == false)
+    {
+        Console.WriteLine("Ongeldige invoer, probeer opnieuw!");
+        y = 0;
+    }
+
+    if (y <= 0)
+    {
+        Console.WriteLine("Ongeldige invoer, de lengte mag niet 0 zijn!");
+    }
+
+    if (y > 5)
+    {
+        Console.WriteLine("Ongeldige invoer, de maximale lengte is 5 containers!");
+        y = 0;
+    }
+    Console.WriteLine("\nWat is de grote van het schip?");
+    Console.Write("x: ");
+    Console.WriteLine($"{x}");
+}
+
 Console.Clear();
 
 
@@ -114,7 +176,20 @@ for (int i = 0; i < ContainerAmount; i++)
         Console.WriteLine(($"{ContainerNumber} / {ContainerAmount} | Gewicht: {container.Gewicht} ton | Soort: {container.ContainerSoort}"));
         ContainerNumber++;
     }
+
+    // Maak grid aan
+    Console.WriteLine("");
+    containerStapel.ContainerStapelsAanmaken();
+
+
+    // Voeg containers toe aan stapels
+    foreach (var container in containers)
+    {
+        ContainerStapel Stapel = containerStapel.grid[0, 1]; //Is nog vaste plek
+        Stapel.VoegContainerToe(container);
+    }
+
+
+    // Laat schip zien
+    containerStapel.ContainerStapelDisplay();
 }
-
-
-
