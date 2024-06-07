@@ -13,7 +13,7 @@ namespace ContainerSchip
         public int x { get; set; }
         public int y { get; set; }
         public List<Container> containers { get; set; }
-        public ContainerStapel() { }
+        public ContainerStapel() {}
         public ContainerStapel(int X, int Y, int AantalContainers)
         {
             x = X;

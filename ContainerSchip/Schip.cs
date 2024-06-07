@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
@@ -9,12 +10,41 @@ namespace ContainerSchip
 {
     public class Schip
     {
-        public int MaximumGewicht { get; set; } = 300;
+        public int MaximumGewicht { get; set; } = 100;
 
         private ContainerStapel containerStapel = new ContainerStapel();
 
         private int MiddelSortY;
         private bool yEmpty = true;
+        private int TotaalGewichtSchip;
+        private int GewichtOver;
+
+        public int MaxGewichtSchip(int Gewicht)
+        {
+            TotaalGewichtSchip = Gewicht + TotaalGewichtSchip;
+            GewichtOver = MaximumGewicht - TotaalGewichtSchip;
+            return GewichtOver;
+        }
+
+        public bool MinGewichtSchip()
+        {
+            if (TotaalGewichtSchip > MaximumGewicht / 2)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public bool GewichtSchip(Container container)
+        {
+            if (MaximumGewicht == TotaalGewichtSchip + container.Gewicht)
+            {
+                TotaalGewichtSchip = container.Gewicht + TotaalGewichtSchip;
+                return false;
+            }
+
+            return true;
+        }
         public int yPossitie(Container container, int y)
         {
             if (y == 1)
