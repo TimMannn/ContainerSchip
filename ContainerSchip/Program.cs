@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using ContainerSchip;
 
+Container Containers = new Container();
 ContainerStapel containerStapel = new ContainerStapel();
 Schip Containerschip = new Schip();
 
@@ -225,24 +226,32 @@ if (!MinGewicht)
     ContainersAanmaak();
 }
 
+//Sorteer containers
+    var GesorteerdeContainers = containers.OrderBy(c =>
+    {
+        switch (c.ContainerSoort)
+        {
+            case Container.Soort.Gekoeld:
+                return 1;
+            case Container.Soort.WaardevolGekoeld:
+                return 2;
+            case Container.Soort.Normaal:
+                return 3;
+            case Container.Soort.Waardevol:
+                return 4;
+            default:
+                return 5;
+        }
+    });
 
-// Laat alle containers zien die je hebt aangemaakt
-Console.Clear();
-int ContainerNumber = 1;
-foreach (var container in containers)
-{
-    Console.WriteLine(($"{ContainerNumber} / {ContainerAmountMemory} | Gewicht: {container.Gewicht} ton | Soort: {container.ContainerSoort}"));
-    ContainerNumber++;
-}
-
-// Maak grid aan
-Console.WriteLine("");
+    // Maak grid aan
+    Console.WriteLine("");
 containerStapel.ContainerStapelsAanmaken();
 
 
 // Voeg containers toe aan stapels
 int MaxRetrys = x * y;
-foreach (var container in containers)
+foreach (var container in GesorteerdeContainers)
 {
     Retry:
     int yGrid = Containerschip.yPossitie(container, y);
@@ -262,6 +271,14 @@ foreach (var container in containers)
     }
 }
 
+// Laat alle containers zien die je hebt aangemaakt
+Console.Clear();
+int ContainerNumber = 1;
+foreach (var container in GesorteerdeContainers)
+{
+    Console.WriteLine(($"{ContainerNumber} / {ContainerAmountMemory} | Gewicht: {container.Gewicht} ton | Soort: {container.ContainerSoort}"));
+    ContainerNumber++;
+}
 
 // Laat schip zien
 containerStapel.ContainerStapelDisplay();

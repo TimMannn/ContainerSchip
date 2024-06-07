@@ -19,6 +19,7 @@ namespace ContainerSchip
             Gekoeld,
             WaardevolGekoeld
         }
+        public Container(){}
 
         public Container(int gewicht, Soort soort)
         {
