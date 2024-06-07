@@ -10,7 +10,7 @@ namespace ContainerSchip
 {
     public class Schip
     {
-        public int MaximumGewicht { get; set; } = 100;
+        public int MaximumGewicht { get; set; } = 60;
 
         private ContainerStapel containerStapel = new ContainerStapel();
 

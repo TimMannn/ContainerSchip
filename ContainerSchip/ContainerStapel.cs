@@ -13,14 +13,19 @@ namespace ContainerSchip
         public int x { get; set; }
         public int y { get; set; }
         public List<Container> containers { get; set; }
-        public ContainerStapel() {}
-        public ContainerStapel(int X, int Y, int AantalContainers)
+        public int stapelGewicht { get; set; }
+        public bool eersteContainer { get; set; } = true;
+        public bool waardevol { get; set; }
+        public ContainerStapel() { }
+        public ContainerStapel(int X, int Y, int AantalContainers, int StapelGewicht, bool EersteContainer, bool Waardevol)
         {
             x = X;
             y = Y;
             aantalContainers = AantalContainers;
             containers = new List<Container>();
-            bool Waardevol = false;
+            stapelGewicht = StapelGewicht;
+            eersteContainer = EersteContainer;
+            waardevol = Waardevol;
         }
 
         public ContainerStapel[,] grid;
@@ -32,16 +37,32 @@ namespace ContainerSchip
             {
                 for (int xx = 0; xx < x; xx++)
                 {
-                    ContainerStapel containerStapel = new ContainerStapel(xx, yy, aantalContainers);
+                    ContainerStapel containerStapel = new ContainerStapel(xx, yy, aantalContainers, stapelGewicht, eersteContainer, waardevol);
                     grid[yy, xx] = containerStapel;
                 }
             }
         }
 
-        public void VoegContainerToe(Container container)
+        public bool VoegContainerToe(Container container)
         {
-            containers.Add(container);
-            aantalContainers++;
+            if (stapelGewicht < 120 && stapelGewicht + container.Gewicht <= 120 && waardevol == false)
+            {
+                containers.Add(container);
+                aantalContainers++;
+                if (!eersteContainer)
+                {
+                    stapelGewicht = container.Gewicht + stapelGewicht;
+                }
+
+                if (container.ContainerSoort == Container.Soort.Waardevol ||
+                    container.ContainerSoort == Container.Soort.WaardevolGekoeld)
+                {
+                    waardevol = true;
+                }
+                eersteContainer = false;
+                return false;
+            }
+            return true;
         }
 
         public void ContainerStapelDisplay()

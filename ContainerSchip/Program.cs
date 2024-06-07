@@ -241,13 +241,25 @@ containerStapel.ContainerStapelsAanmaken();
 
 
 // Voeg containers toe aan stapels
+int MaxRetrys = x * y;
 foreach (var container in containers)
 {
+    Retry:
     int yGrid = Containerschip.yPossitie(container, y);
     int xGrid = Containerschip.xPossitie();
 
     ContainerStapel Stapel = containerStapel.grid[yGrid, xGrid];
-    Stapel.VoegContainerToe(container);
+    bool VolleStapel = Stapel.VoegContainerToe(container);
+    if (VolleStapel)
+    {
+        MaxRetrys--;
+        if (MaxRetrys == 0)
+        {
+            Console.WriteLine("Het is niet mogelijk om alle containers op het ship te verdelen. Probeer een groter schip!");
+            break;
+        }
+        goto Retry;
+    }
 }
 
 
