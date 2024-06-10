@@ -71,7 +71,7 @@ namespace ContainerSchip
             {
                 for (int xx = 0; xx < x; xx++)
                 {
-                    Console.Write(grid[yy, xx].aantalContainers + "\t");
+                    Console.Write(grid[yy, xx].stapelGewicht + "\t");
                 }
                 Console.WriteLine();
             }

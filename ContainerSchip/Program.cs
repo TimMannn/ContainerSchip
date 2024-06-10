@@ -12,7 +12,7 @@ int y = 0;
 while (x == 0)
 {
     Console.WriteLine("\nWat is de grote van het schip?");
-    Console.Write("x: ");
+    Console.Write("Breedte in containers: ");
     var xInput = Console.ReadLine();
     bool CorrectParseX = int.TryParse(xInput, out x);
     containerStapel.x = x;
@@ -39,13 +39,13 @@ while (x == 0)
     }
 
     Console.WriteLine("\nWat is de grote van het schip?");
-    Console.Write("x: ");
+    Console.Write("Breedte in containers: ");
     Console.WriteLine($"{x}");
 }
 
 while (y == 0)
 {
-    Console.Write("y: ");
+    Console.Write("Lengte in containers: ");
     var yInput = Console.ReadLine();
     bool CorrectParseY = int.TryParse(yInput, out y);
     containerStapel.y = y;
@@ -68,7 +68,7 @@ while (y == 0)
         y = 0;
     }
     Console.WriteLine("\nWat is de grote van het schip?");
-    Console.Write("x: ");
+    Console.Write("Breedte in containers: ");
     Console.WriteLine($"{x}");
 }
 
@@ -245,7 +245,6 @@ if (!MinGewicht)
     });
 
     // Maak grid aan
-    Console.WriteLine("");
 containerStapel.ContainerStapelsAanmaken();
 
 
@@ -271,6 +270,8 @@ foreach (var container in GesorteerdeContainers)
     }
 
     Containerschip.ContainerFAIL = 0;
+    Containerschip.RijenLinks = 1;
+    Containerschip.RijenRechts = 1;
     Containerschip.VoegGewichtToe(container, xGrid);
 }
 
@@ -282,6 +283,7 @@ foreach (var container in GesorteerdeContainers)
     Console.WriteLine(($"{ContainerNumber} / {ContainerAmountMemory} | Gewicht: {container.Gewicht} ton | Soort: {container.ContainerSoort}"));
     ContainerNumber++;
 }
+Console.WriteLine("");
 
 // Laat schip zien
 containerStapel.ContainerStapelDisplay();

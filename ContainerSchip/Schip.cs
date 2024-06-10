@@ -11,10 +11,9 @@ namespace ContainerSchip
 {
     public class Schip
     {
-        public int MaximumGewicht { get; set; } = 800;
-        public int ContainerFAIL { get; set; } = 0;
+        public int MaximumGewicht { get; set; } = 1000;
+        public int ContainerFAIL { get; set; }
 
-        private ContainerStapel containerStapel = new ContainerStapel();
         private int MiddelSortY;
         private bool yEmpty = true;
         private int TotaalGewichtSchip;
@@ -25,8 +24,8 @@ namespace ContainerSchip
         private int GewichtRechts;
         private int GewichtLinks;
         private int GewichtMidden;
-        private int RijenLinks = 1;
-        private int RijenRechts = 1;
+        public int RijenLinks { get; set; } = 1;
+        public int RijenRechts { get; set; } = 1;
 
         public int MaxGewichtSchip(int Gewicht)
         {
