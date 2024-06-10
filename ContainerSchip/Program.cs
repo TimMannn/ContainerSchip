@@ -31,9 +31,9 @@ while (x == 0)
         continue;
     }
 
-    if (x > 5)
+    if (x > 10)
     {
-        Console.WriteLine("Ongeldige invoer, de maximale breedte is 5 containers!");
+        Console.WriteLine("Ongeldige invoer, de maximale breedte is 10 containers!");
         x = 0;
         continue;
     }
@@ -250,25 +250,28 @@ containerStapel.ContainerStapelsAanmaken();
 
 
 // Voeg containers toe aan stapels
-int MaxRetrys = x * y;
+int MaxRetrys = (x / 2) * y;
 foreach (var container in GesorteerdeContainers)
 {
     Retry:
     int yGrid = Containerschip.yPossitie(container, y);
-    int xGrid = Containerschip.xPossitie();
+    int xGrid = Containerschip.xPossitie(container, x, y);
 
     ContainerStapel Stapel = containerStapel.grid[yGrid, xGrid];
     bool VolleStapel = Stapel.VoegContainerToe(container);
     if (VolleStapel)
     {
-        MaxRetrys--;
-        if (MaxRetrys == 0)
+        Containerschip.ContainerFAIL++;
+        /*if (Containerschip.ContainerFAIL >= MaxRetrys)
         {
             Console.WriteLine("Het is niet mogelijk om alle containers op het ship te verdelen. Probeer een groter schip!");
             break;
-        }
+        }*/
         goto Retry;
     }
+
+    Containerschip.ContainerFAIL = 0;
+    Containerschip.VoegGewichtToe(container, xGrid);
 }
 
 // Laat alle containers zien die je hebt aangemaakt
